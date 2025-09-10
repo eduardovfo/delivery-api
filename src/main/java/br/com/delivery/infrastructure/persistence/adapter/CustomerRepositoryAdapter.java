@@ -4,6 +4,8 @@ import br.com.delivery.domain.entity.Customer;
 import br.com.delivery.domain.port.CustomerRepositoryPort;
 import br.com.delivery.infrastructure.persistence.entity.CustomerEntity;
 import br.com.delivery.infrastructure.persistence.repository.CustomerJpaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @Component
 public class CustomerRepositoryAdapter implements CustomerRepositoryPort {
     
+    private static final Logger logger = LoggerFactory.getLogger(CustomerRepositoryAdapter.class);
     private final CustomerJpaRepository jpaRepository;
     
     public CustomerRepositoryAdapter(CustomerJpaRepository jpaRepository) {
@@ -36,9 +39,30 @@ public class CustomerRepositoryAdapter implements CustomerRepositoryPort {
     
     @Override
     public List<Customer> findAll() {
-        return jpaRepository.findAll().stream()
-                .map(this::toDomain)
-                .collect(Collectors.toList());
+        try {
+            List<CustomerEntity> entities = jpaRepository.findAll();
+            logger.info("Encontradas {} entidades CustomerEntity no banco", entities.size());
+            
+            for (CustomerEntity entity : entities) {
+                logger.info("CustomerEntity: id={}, name={}, email={}, document={}", 
+                    entity.getId(), entity.getName(), entity.getEmail(), entity.getDocument());
+            }
+            
+            List<Customer> customers = entities.stream()
+                    .map(this::toDomain)
+                    .collect(Collectors.toList());
+            
+            logger.info("Convertidas {} entidades para Customer domain", customers.size());
+            for (Customer customer : customers) {
+                logger.info("Customer domain: id={}, name={}, email={}, document={}", 
+                    customer.getId(), customer.getName(), customer.getEmail(), customer.getDocument());
+            }
+            
+            return customers;
+        } catch (Exception e) {
+            logger.error("Erro ao buscar clientes", e);
+            throw e;
+        }
     }
     
     @Override
