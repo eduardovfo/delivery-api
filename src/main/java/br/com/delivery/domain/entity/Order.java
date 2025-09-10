@@ -1,6 +1,7 @@
 package br.com.delivery.domain.entity;
 
 import br.com.delivery.domain.valueobject.OrderItem;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 public class Order {
     private final String id;
     private final String customerId;
@@ -34,24 +36,8 @@ public class Order {
         this.createdAt = LocalDateTime.now();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
     public List<OrderItem> getItems() {
         return Collections.unmodifiableList(items);
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 
     public BigDecimal getTotal() {

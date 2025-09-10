@@ -1,8 +1,14 @@
 package br.com.delivery.domain.valueobject;
 
-import java.math.BigDecimal;
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
+import java.math.BigDecimal;
+
+@Getter
+@EqualsAndHashCode
+@ToString
 public class OrderItem {
     private final String productId;
     private final int quantity;
@@ -24,43 +30,7 @@ public class OrderItem {
         this.unitPrice = unitPrice;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
-
     public BigDecimal getTotalPrice() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItem orderItem = (OrderItem) o;
-        return quantity == orderItem.quantity &&
-                Objects.equals(productId, orderItem.productId) &&
-                Objects.equals(unitPrice, orderItem.unitPrice);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(productId, quantity, unitPrice);
-    }
-
-    @Override
-    public String toString() {
-        return "OrderItem{" +
-                "productId='" + productId + '\'' +
-                ", quantity=" + quantity +
-                ", unitPrice=" + unitPrice +
-                '}';
     }
 }

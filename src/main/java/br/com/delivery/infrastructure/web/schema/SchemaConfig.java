@@ -1,6 +1,5 @@
 package br.com.delivery.infrastructure.web.schema;
 
-import br.com.delivery.domain.entity.Order;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,16 +14,22 @@ public class SchemaConfig {
     public enum OrderStatusSchema {
         @Schema(description = "Pedido criado, aguardando confirmação")
         CREATED,
-        
+
         @Schema(description = "Pedido confirmado, em preparação")
         CONFIRMED,
-        
-        @Schema(description = "Pedido enviado para entrega")
-        SHIPPED,
-        
+
+        @Schema(description = "Pedido em preparação")
+        PREPARING,
+
+        @Schema(description = "Pedido pronto para entrega")
+        READY,
+
+        @Schema(description = "Pedido em trânsito para entrega")
+        DELIVERING,
+
         @Schema(description = "Pedido entregue com sucesso")
         DELIVERED,
-        
+
         @Schema(description = "Pedido cancelado")
         CANCELED
     }
