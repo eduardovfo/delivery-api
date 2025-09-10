@@ -28,7 +28,7 @@ public class Order {
         if (items == null || items.isEmpty()) {
             throw new IllegalArgumentException("Order must have at least one item");
         }
-        
+
         this.id = id.trim();
         this.customerId = customerId.trim();
         this.items = new ArrayList<>(items);
@@ -50,30 +50,23 @@ public class Order {
         if (newStatus == null) {
             throw new IllegalArgumentException("New status cannot be null");
         }
-        
+
         if (status == OrderStatus.CANCELED) {
             throw new IllegalStateException("Cannot change status of a canceled order");
         }
-        
+
         if (status == OrderStatus.DELIVERED) {
             throw new IllegalStateException("Cannot change status of a delivered order");
         }
-        
+
         if (newStatus == OrderStatus.CREATED) {
             throw new IllegalArgumentException("Cannot revert to CREATED status");
         }
-        
+
         this.status = newStatus;
     }
 
-    public void cancel() {
-        if (status == OrderStatus.DELIVERED) {
-            throw new IllegalStateException("Cannot cancel a delivered order");
-        }
-        this.status = OrderStatus.CANCELED;
-    }
-
-    @Override
+  @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -104,16 +97,16 @@ public class Order {
     public enum OrderStatus {
         @io.swagger.v3.oas.annotations.media.Schema(description = "Pedido criado, aguardando confirmação")
         CREATED,
-        
+
         @io.swagger.v3.oas.annotations.media.Schema(description = "Pedido confirmado, em preparação")
         CONFIRMED,
-        
+
         @io.swagger.v3.oas.annotations.media.Schema(description = "Pedido enviado para entrega")
         SHIPPED,
-        
+
         @io.swagger.v3.oas.annotations.media.Schema(description = "Pedido entregue com sucesso")
         DELIVERED,
-        
+
         @io.swagger.v3.oas.annotations.media.Schema(description = "Pedido cancelado")
         CANCELED
     }
