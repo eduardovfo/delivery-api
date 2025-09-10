@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: false
+    open-in-view: false
+  
+  h2:
+    console:
+      enabled: false
+  
+  cache:
+    type: simple
+  
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/delivery
+
+flyway:
+  enabled: false
+
+logging:
+  level:
+    org.springframework.web: WARN
+    org.hibernate: WARN
+    br.com.delivery: DEBUG
