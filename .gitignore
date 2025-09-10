@@ -3,6 +3,10 @@
 build/
 !gradle/wrapper/gradle-wrapper.jar
 
+# Java
+*.class
+bin/
+
 # IDEs
 *.iml
 .idea/

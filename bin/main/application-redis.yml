@@ -1,7 +1,0 @@
-spring:
-  cache:
-    type: redis
-    redis:
-      time-to-live: 300000 # 5 minutos em ms
-      cache-null-values: false
-      enable-statistics: true
